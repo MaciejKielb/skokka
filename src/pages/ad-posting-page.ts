@@ -43,19 +43,19 @@ export class AdPostingPages {
         await this.checkAlertVisibility(shouldSeeAlert, true)
     }
 
-    private async checkAlertVisibility(shouldSeeAlert: boolean, isTheLastPage = false) {
+    private async checkAlertVisibility(shouldSeeAlert: boolean, isTheLastPage = false, timeout = 10000) {
         if (shouldSeeAlert) {
             if (isTheLastPage) {
-                await expect(this.alertBanner).toBeVisible({ timeout: 10000 });
+                await expect(this.alertBanner).toBeVisible({ timeout })
             } else {
-                await expect.soft(this.alertBanner).toBeVisible({ timeout: 10000 });
+                await expect.soft(this.alertBanner).toBeVisible({ timeout })
             }
         } else {
             if (isTheLastPage) {
-                await expect(this.alertBanner).not.toBeVisible({ timeout: 10000 });
+                await expect(this.alertBanner).not.toBeVisible({ timeout })
             } else {
-                await expect.soft(this.alertBanner).not.toBeVisible({ timeout: 10000 });
-            }
+                await expect.soft(this.alertBanner).not.toBeVisible({ timeout })
+            
         }
     }
 }
