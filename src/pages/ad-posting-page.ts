@@ -8,37 +8,54 @@ export class AdPostingPages {
     constructor(page: Page) {
         this.page = page
         this.postAdButton = this.page.locator('#main-header').getByRole('button')
-        this.alertBanner = page.getByRole('alert', { name: /Importent Notice/})
+        this.alertBanner = page.getByRole('alert', { name: /Importent Notice/ })
     }
 
-    async postAdAndCheckIfTheAlertIsVisible() {
+    async postAdAndCheckIfAlertBannerIsVisible(shouldSeeAlert: boolean) {
         await this.postAdButton.click()
-        await this.adInfoPage()
-        await this.addPhotosPage()
-        await this.visibiltyPage()
-        await this.feedbackPage()
+        await this.adInfoPage(shouldSeeAlert)
+        await this.addPhotosPage(shouldSeeAlert)
+        await this.visibiltyPage(shouldSeeAlert)
+        await this.feedbackPage(shouldSeeAlert)
     }
 
-    private async adInfoPage() {
-        await this.isAlertBannerVisible()
-        // Here code to fill information and move to next page
+    private async adInfoPage(shouldSeeAlert: boolean) {
+        await this.page.waitForLoadState('domcontentloaded')
+        await this.checkAlertVisibility(shouldSeeAlert)
+        // code to fill information require to move to next page
+        // code click on button to next page
     }
 
-    private async addPhotosPage() {
-        await this.isAlertBannerVisible()
+    private async addPhotosPage(shouldSeeAlert: boolean) {
+        await this.page.waitForLoadState('domcontentloaded')
+        await this.checkAlertVisibility(shouldSeeAlert)
         // code to move to next page
     }
 
-    private async visibiltyPage() {
-        await this.isAlertBannerVisible()
+    private async visibiltyPage(shouldSeeAlert: boolean) {
+        await this.page.waitForLoadState('domcontentloaded')
+        await this.checkAlertVisibility(shouldSeeAlert)
         // code to post add
     }
 
-    private async feedbackPage() {
-        await this.isAlertBannerVisible()
+    private async feedbackPage(shouldSeeAlert: boolean) {
+        await this.page.waitForLoadState('domcontentloaded')
+        await this.checkAlertVisibility(shouldSeeAlert, true)
     }
 
-    private async isAlertBannerVisible() {
-        await expect(this.alertBanner).toBeVisible()
+    private async checkAlertVisibility(shouldSeeAlert: boolean, isTheLastPage = false) {
+        if (shouldSeeAlert) {
+            if (isTheLastPage) {
+                await expect(this.alertBanner).toBeVisible({ timeout: 10000 });
+            } else {
+                await expect.soft(this.alertBanner).toBeVisible({ timeout: 10000 });
+            }
+        } else {
+            if (isTheLastPage) {
+                await expect(this.alertBanner).not.toBeVisible({ timeout: 10000 });
+            } else {
+                await expect.soft(this.alertBanner).not.toBeVisible({ timeout: 10000 });
+            }
+        }
     }
 }
