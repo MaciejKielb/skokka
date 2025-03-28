@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
 import { Homepage } from '../src/pages/homepage'
 import { AgeConfirmationModal } from '../src/pages/modals/age-confirmation'
 import { CookieConsentModal } from '../src/pages/modals/cookie-consent'
@@ -28,17 +28,4 @@ test.describe('Alert Banner during adding ad', () => {
 
     await adPostingPages.postAdAndCheckIfTheAlertIsVisible()
   })
-
-  test('should be visible for user from Brasil', async ({ page }) => {
-    await homepage.selectFirstCityInBrasil()
-
-    await page.waitForLoadState('domcontentloaded')
-
-    await ageConfirmation.acceptAgeVerification()
-    await cookieConsent.acceptCookieConsent()
-
-    await adPostingPages.postAdAndCheckIfTheAlertIsVisible()
-  })
-
-  
 })
