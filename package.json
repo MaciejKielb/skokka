@@ -1,7 +1,7 @@
 {
   "name": "skokka",
   "version": "1.0.0",
-  "description": "Skokka yellow alert automation tests",
+  "description": "Skokka yellow alert banner automation tests",
   "main": "index.js",
   "repository": "https://github.com/MaciejKielb/skokka.git",
   "author": "Maciej Kielb",
