@@ -19,4 +19,6 @@ export class CookieConsentModal {
             console.warn(`Cookie consent modal did not appear within 10000 ms: ${error}`);
         }
     }
+
+    // Here code to cover other scenarios 
 }

@@ -19,4 +19,8 @@ export class AgeConfirmationModal {
             console.warn(`Age verification modal did not appear within 10000 ms: ${error}`);
         }
     }
+
+    async declineAgeVerification() {
+        // code
+    }
 }

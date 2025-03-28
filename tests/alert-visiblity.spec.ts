@@ -1,31 +1,58 @@
-import { test } from '@playwright/test'
-import { Homepage } from '../src/pages/homepage'
-import { AgeConfirmationModal } from '../src/pages/modals/age-confirmation'
-import { CookieConsentModal } from '../src/pages/modals/cookie-consent'
-import { AdPostingPages } from '../src/pages/ad-posting-page'
+import { test } from '@shared/fixtures'
 
-test.describe('Alert Banner during adding ad', () => {
-  let homepage: Homepage
-  let ageConfirmation: AgeConfirmationModal
-  let cookieConsent: CookieConsentModal
-  let adPostingPages: AdPostingPages
-  
-  test.beforeEach(async ({ page }) => {
-    homepage = new Homepage(page)
-    ageConfirmation = new AgeConfirmationModal(page)
-    cookieConsent = new CookieConsentModal(page)
-    adPostingPages = new AdPostingPages(page)
-    await page.goto('/');
-  })
-
-  test('should be visible for user from Argentina', async ({ page }) => {
-    await homepage.selectFirstCityInArgentina()
+test.describe('Alert Banner for non-logged in users', () => {
+  test('should be visible in Argentina during adding ad', async ({ page, homePage, ageConfirmation, cookieConsent, adPost }) => {
+    await homePage.selectFirstCityInArgentina()
 
     await page.waitForLoadState('domcontentloaded')
 
     await ageConfirmation.acceptAgeVerification()
     await cookieConsent.acceptCookieConsent()
 
-    await adPostingPages.postAdAndCheckIfTheAlertIsVisible()
+    await adPost.postAdAndCheckIfAlertBannerIsVisible(true)
+  })
+
+  test('should be visible in Brasil during adding ad', async ({ page, homePage, ageConfirmation, cookieConsent, adPost }) => {
+    await homePage.selectFirstCityInBrasil()
+
+    await page.waitForLoadState('domcontentloaded')
+
+    await ageConfirmation.acceptAgeVerification()
+    await cookieConsent.acceptCookieConsent()
+
+    await adPost.postAdAndCheckIfAlertBannerIsVisible(true)
+  })
+
+  test('should be visible in Singapore during adding ad', async ({ page, homePage, ageConfirmation, cookieConsent, adPost }) => {
+    await homePage.selectFirstCityInSingapore()
+
+    await page.waitForLoadState('domcontentloaded')
+
+    await ageConfirmation.acceptAgeVerification()
+    await cookieConsent.acceptCookieConsent()
+
+    await adPost.postAdAndCheckIfAlertBannerIsVisible(true)
+  })
+
+  test('should be visible in Switzerland during adding ad', async ({ page, homePage, ageConfirmation, cookieConsent, adPost }) => {
+    await homePage.selectFirstCityInSwitzerland()
+
+    await page.waitForLoadState('domcontentloaded')
+
+    await ageConfirmation.acceptAgeVerification()
+    await cookieConsent.acceptCookieConsent()
+
+    await adPost.postAdAndCheckIfAlertBannerIsVisible(true)
+  })
+
+  test('should not be visible in Cyprus during adding ad', async ({ page, homePage, ageConfirmation, cookieConsent, adPost }) => {
+    await homePage.selectFirstCityInCyprus()
+
+    await page.waitForLoadState('domcontentloaded')
+
+    await ageConfirmation.acceptAgeVerification()
+    await cookieConsent.acceptCookieConsent()
+
+    await adPost.postAdAndCheckIfAlertBannerIsVisible(false)
   })
 })
