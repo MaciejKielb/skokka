@@ -3,12 +3,14 @@ import { Homepage } from '@pages/homepage'
 import { AgeConfirmationModal } from '@modals/age-confirmation'
 import { CookieConsentModal } from '@modals/cookie-consent'
 import { AdPostingPages } from '@pages/ad-posting-page'
+import { Logger } from '@pages/logger'
 
 type Fixtures = {
     homePage: Homepage
     ageConfirmation: AgeConfirmationModal
     cookieConsent: CookieConsentModal
-    adPost: AdPostingPages
+    postAd: AdPostingPages
+    logger: Logger
 }
 
 export const test = base.extend<Fixtures>({
@@ -27,4 +29,14 @@ export const test = base.extend<Fixtures>({
         const modal = new CookieConsentModal(page)
         await use(modal)
     },
+
+    postAd: async ({ page }, use) => {
+        const postAd = new AdPostingPages(page)
+        await use(postAd)
+    },
+
+    logger: async ({ page }, use) => {
+        const logger = new Logger(page)
+        await use(logger)
+    }
 })

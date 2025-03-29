@@ -11,12 +11,14 @@ export class CookieConsentModal {
         this.acceptCookieConsentButton = this.page.locator('.modal-footer.d-block .btn.btn-primary')
     }
 
-    async acceptCookieConsent() {
+    async acceptCookieConsent(timeout = 5000): Promise<boolean> {
         try {
-            await this.cookieConsentModal.waitFor({ state: 'visible', timeout: 10000 });
+            await this.cookieConsentModal.waitFor({ state: 'visible', timeout })
             await this.acceptCookieConsentButton.click();
+            return true
         } catch (error) {
-            console.warn(`Cookie consent modal did not appear within 10000 ms: ${error}`);
+            console.warn(`Cookie consent modal did not appear within ${timeout} ms: ${error}`)
+            return false
         }
     }
 

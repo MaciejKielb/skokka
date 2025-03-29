@@ -55,7 +55,8 @@ export class AdPostingPages {
                 await expect(this.alertBanner).not.toBeVisible({ timeout })
             } else {
                 await expect.soft(this.alertBanner).not.toBeVisible({ timeout })
-            
+
+            }
         }
     }
 }

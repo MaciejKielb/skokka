@@ -11,12 +11,14 @@ export class AgeConfirmationModal {
         this.acceptButton = this.page.locator('.text-center.mb-3 .btn.btn-primary.w-50.rounded-pill.b1')
     }
 
-    async acceptAgeVerification() {
+    async acceptAgeVerification(timeout = 5000): Promise<boolean> {
         try {
-            await this.ageConfirmationModal.waitFor({ state: 'visible', timeout: 10000 });
-            await this.acceptButton.click();
+            await this.ageConfirmationModal.waitFor({ state: 'visible', timeout })
+            await this.acceptButton.click()
+            return true
         } catch (error) {
-            console.warn(`Age verification modal did not appear within 10000 ms: ${error}`);
+            console.warn(`Age verification modal did not appear within ${timeout} ms: ${error}`)
+            return false
         }
     }
 
